@@ -1,4 +1,3 @@
-import { ctx } from "./core";
+import main from "./main";
 
-ctx.fillStyle = "darkblue";
-ctx.fillRect(100, 100, 200, 300);
+main();
