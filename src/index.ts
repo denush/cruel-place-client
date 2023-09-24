@@ -1,1 +1,3 @@
-console.log("hello, Cruel Place!");
+import main from "./main";
+
+main();
