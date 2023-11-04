@@ -1,17 +1,13 @@
-import { canvas, ctx } from "./core";
-import { renderEntities } from "./render";
+import { renderer } from "./dependencies/renderer_module";
+import { wsClient } from "./dependencies/ws_module";
 
 export default function main() {
+  wsClient.initEntities();
   loop();
 }
 
 function loop() {
   requestAnimationFrame(loop);
 
-  render();
-}
-
-function render() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  renderEntities();
+  renderer.render();
 }
