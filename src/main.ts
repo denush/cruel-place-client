@@ -3,6 +3,7 @@ import { wsClient } from "./dependencies/ws_module";
 
 export default function main() {
   wsClient.initEntities();
+  wsClient.initPlayer();
   loop();
 }
 

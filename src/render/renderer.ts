@@ -21,9 +21,15 @@ export class Renderer {
 
   private _renderEntities() {
     const entities = this._state.entities.list;
+    const player = this._state.entities.player;
 
     for (const entity of entities) {
       this._ctx.fillStyle = "darkblue";
+
+      if (entity.id === player?.id) {
+        this._ctx.fillStyle = "black";
+      }
+
       this._ctx.fillRect(entity.x, entity.y, entity.width, entity.height);
     }
   }
