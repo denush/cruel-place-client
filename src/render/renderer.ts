@@ -24,12 +24,14 @@ export class Renderer {
     const player = this._state.entities.player;
 
     for (const entity of entities) {
-      this._ctx.fillStyle = "darkblue";
-
       if (entity.id === player?.id) {
         this._ctx.fillStyle = "black";
+        this._ctx.fillRect(player.x, player.y, player.width, player.height);
+
+        continue;
       }
 
+      this._ctx.fillStyle = "darkblue";
       this._ctx.fillRect(entity.x, entity.y, entity.width, entity.height);
     }
   }
