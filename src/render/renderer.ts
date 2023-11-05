@@ -16,7 +16,12 @@ export class Renderer {
   }
 
   render() {
+    this._clearScreen();
     this._renderEntities();
+  }
+
+  private _clearScreen() {
+    this._ctx.clearRect(0, 0, this._canvas.width, this._canvas.height);
   }
 
   private _renderEntities() {
