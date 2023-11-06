@@ -1,17 +1,19 @@
-import { canvas, ctx } from "./core";
-import { renderEntities } from "./render";
+import { control } from "./dependencies/control_module";
+import { interactor } from "./dependencies/interactor_module";
+import { renderer } from "./dependencies/renderer_module";
+import { wsClient } from "./dependencies/ws_module";
 
 export default function main() {
+  control.init();
+  wsClient.initEntities();
+  wsClient.initPlayer();
+
   loop();
 }
 
 function loop() {
   requestAnimationFrame(loop);
 
-  render();
-}
-
-function render() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  renderEntities();
+  interactor.update();
+  renderer.render();
 }
