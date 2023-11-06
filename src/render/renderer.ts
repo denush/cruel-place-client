@@ -1,4 +1,5 @@
 import { State } from "../state/state";
+import { renderDirection_test } from "./utils";
 
 export class Renderer {
   private _canvas: HTMLCanvasElement;
@@ -37,6 +38,13 @@ export class Renderer {
         this._ctx.arc(player.x, player.y, 20, 0, 180);
         this._ctx.fill();
         this._ctx.closePath();
+
+        renderDirection_test(
+          this._ctx,
+          player.x,
+          player.y,
+          player.state.direction
+        );
 
         continue;
       }
