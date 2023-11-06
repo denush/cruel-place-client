@@ -1,18 +1,27 @@
 export interface ControlSubscriber {
-  update: (
+  onButtonAction: (
     button: string,
     action: "up" | "down",
     pushedButtons: Set<string>
   ) => void;
 }
 
-interface Interaction {
-  type: "down" | "up" | "hold";
+export type InteractionList = "moveUp" | "moveDown" | "moveLeft" | "moveRight";
+
+interface InteractionDetails {
   button: string;
+  category: "move";
 }
 
-export interface Interactions {
-  [interactionName: string]: Interaction;
+export type InteractionsMapper = {
+  [interactionName in InteractionList]: InteractionDetails;
+};
+
+export interface InteractorHoldState {
+  moveUp: boolean;
+  moveDown: boolean;
+  moveLeft: boolean;
+  moveRight: boolean;
 }
 
 export function getMouseButton(event: MouseEvent) {
@@ -28,12 +37,28 @@ export function getMouseButton(event: MouseEvent) {
   }
 }
 
-export function getUsedButtons(interactions: Interactions): Set<string> {
+export function getUsedButtons(
+  interactionsMapper: InteractionsMapper
+): Set<string> {
   const usedButtons = new Set<string>();
 
-  for (const value of Object.values(interactions)) {
+  for (const value of Object.values(interactionsMapper)) {
     usedButtons.add(value.button);
   }
 
   return usedButtons;
+}
+
+export function getInteractionCategory(
+  button: string,
+  interactionsMapper: InteractionsMapper
+) {
+  const values = Object.values(interactionsMapper);
+  const finded = values.find((value) => value.button === button);
+
+  if (finded) {
+    return finded.category;
+  }
+
+  throw new Error("ERROR_FIND_BUTTON_INTERACTION_CATEGORY");
 }

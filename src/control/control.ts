@@ -1,14 +1,15 @@
 import { getMouseButton, getUsedButtons } from "./utils";
-import type { ControlSubscriber, Interactions } from "./utils";
+import type { ControlSubscriber } from "./utils";
+import { interactionsMapper } from "./interactions_mapper";
 
 export class Control {
   private _pushedButtons: Set<string> = new Set();
   private _subscribers: ControlSubscriber[] = [];
   private readonly _usedButtons: Set<string>;
 
-  constructor(subscribers: ControlSubscriber[], interactions: Interactions) {
+  constructor(subscribers: ControlSubscriber[]) {
     this._subscribers = subscribers;
-    this._usedButtons = getUsedButtons(interactions);
+    this._usedButtons = getUsedButtons(interactionsMapper);
   }
 
   init() {
@@ -44,7 +45,7 @@ export class Control {
     }
 
     for (const subscriber of this._subscribers) {
-      subscriber.update(button, action, this._pushedButtons);
+      subscriber.onButtonAction(button, action, this._pushedButtons);
     }
   }
 }
