@@ -1,7 +1,8 @@
 import { Entity } from "../models/entity";
+import { Person } from "../models/person";
 
 class EntitiesState {
-  player: Entity | null = null;
+  player: Person | null = null;
   list: Entity[] = [];
 }
 

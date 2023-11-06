@@ -37,10 +37,15 @@ export class MoveInteractor {
   }
 
   update() {
+    const player = this._state.entities.player!;
+    player.state.isMoving = false;
+
     for (const [interactionName, hold] of Object.entries(this._holdState)) {
       if (!hold) {
         continue;
       }
+
+      player.state.isMoving = true;
 
       const combination = getCombinationMove(
         interactionName as InteractionList,
@@ -58,50 +63,70 @@ export class MoveInteractor {
   }
 
   private moveUp() {
-    const player = this._state.entities.player;
-    player!.y -= 5;
+    const player = this._state.entities.player!;
+
+    player.state.direction = "up";
+    player.y -= 5;
   }
 
   private moveDown() {
-    const player = this._state.entities.player;
-    player!.y += 5;
+    const player = this._state.entities.player!;
+
+    player.state.direction = "down";
+    player.y += 5;
   }
 
   private moveLeft() {
-    const player = this._state.entities.player;
-    player!.x -= 5;
+    const player = this._state.entities.player!;
+
+    player.state.direction = "left";
+    player.x -= 5;
   }
 
   private moveRight() {
-    const player = this._state.entities.player;
-    player!.x += 5;
+    const player = this._state.entities.player!;
+
+    player.state.direction = "right";
+    player.x += 5;
   }
 
   private moveUpLeft() {
-    const player = this._state.entities.player;
+    const player = this._state.entities.player!;
+
+    player.state.direction = "left";
+
     const moveComponent = 5 / Math.sqrt(2);
-    player!.x -= moveComponent;
-    player!.y -= moveComponent;
+    player.x -= moveComponent;
+    player.y -= moveComponent;
   }
 
   private moveUpRight() {
-    const player = this._state.entities.player;
+    const player = this._state.entities.player!;
+
+    player.state.direction = "right";
+
     const moveComponent = 5 / Math.sqrt(2);
-    player!.x += moveComponent;
-    player!.y -= moveComponent;
+    player.x += moveComponent;
+    player.y -= moveComponent;
   }
 
   private moveDownLeft() {
-    const player = this._state.entities.player;
+    const player = this._state.entities.player!;
+
+    player.state.direction = "left";
+
     const moveComponent = 5 / Math.sqrt(2);
-    player!.x -= moveComponent;
-    player!.y += moveComponent;
+    player.x -= moveComponent;
+    player.y += moveComponent;
   }
 
   private moveDownRight() {
-    const player = this._state.entities.player;
+    const player = this._state.entities.player!;
+
+    player.state.direction = "right";
+
     const moveComponent = 5 / Math.sqrt(2);
-    player!.x += moveComponent;
-    player!.y += moveComponent;
+    player.x += moveComponent;
+    player.y += moveComponent;
   }
 }
