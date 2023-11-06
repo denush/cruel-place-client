@@ -1,6 +1,10 @@
 import { State } from "../state/state";
 import { interactionsMapper } from "./interactions_mapper";
-import type { InteractorHoldState } from "./utils";
+import {
+  getCombinationMove,
+  InteractionList,
+  InteractorHoldState,
+} from "./utils";
 
 export class MoveInteractor {
   private _state: State;
@@ -15,11 +19,7 @@ export class MoveInteractor {
     this._state = state;
   }
 
-  onButtonAction(
-    button: string,
-    action: "up" | "down",
-    pushedButtons: Set<string>
-  ) {
+  onButtonAction(button: string, action: "up" | "down") {
     const findedInteraction = Object.entries(interactionsMapper).find(
       ([interactionName, details]) => details.button === button
     );
@@ -38,9 +38,22 @@ export class MoveInteractor {
 
   update() {
     for (const [interactionName, hold] of Object.entries(this._holdState)) {
-      if (hold) {
+      if (!hold) {
+        continue;
+      }
+
+      const combination = getCombinationMove(
+        interactionName as InteractionList,
+        this._holdState
+      );
+
+      if (combination) {
+        (this[combination as keyof this] as Function)();
+      } else {
         (this[interactionName as keyof this] as Function)();
       }
+
+      break;
     }
   }
 
@@ -62,5 +75,33 @@ export class MoveInteractor {
   private moveRight() {
     const player = this._state.entities.player;
     player!.x += 5;
+  }
+
+  private moveUpLeft() {
+    const player = this._state.entities.player;
+    const moveComponent = 5 / Math.sqrt(2);
+    player!.x -= moveComponent;
+    player!.y -= moveComponent;
+  }
+
+  private moveUpRight() {
+    const player = this._state.entities.player;
+    const moveComponent = 5 / Math.sqrt(2);
+    player!.x += moveComponent;
+    player!.y -= moveComponent;
+  }
+
+  private moveDownLeft() {
+    const player = this._state.entities.player;
+    const moveComponent = 5 / Math.sqrt(2);
+    player!.x -= moveComponent;
+    player!.y += moveComponent;
+  }
+
+  private moveDownRight() {
+    const player = this._state.entities.player;
+    const moveComponent = 5 / Math.sqrt(2);
+    player!.x += moveComponent;
+    player!.y += moveComponent;
   }
 }

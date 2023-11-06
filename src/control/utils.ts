@@ -62,3 +62,37 @@ export function getInteractionCategory(
 
   throw new Error("ERROR_FIND_BUTTON_INTERACTION_CATEGORY");
 }
+
+type CombinationMove =
+  | "moveUpLeft"
+  | "moveUpRight"
+  | "moveDownLeft"
+  | "moveDownRight";
+
+export function getCombinationMove(
+  interaction: InteractionList,
+  holdState: InteractorHoldState
+): CombinationMove | null {
+  switch (interaction) {
+    case "moveUp":
+      if (holdState.moveLeft) return "moveUpLeft";
+      if (holdState.moveRight) return "moveUpRight";
+      break;
+    case "moveDown":
+      if (holdState.moveLeft) return "moveDownLeft";
+      if (holdState.moveRight) return "moveDownRight";
+      break;
+    case "moveLeft":
+      if (holdState.moveUp) return "moveUpLeft";
+      if (holdState.moveDown) return "moveDownLeft";
+      break;
+    case "moveRight":
+      if (holdState.moveUp) return "moveUpRight";
+      if (holdState.moveDown) return "moveDownRight";
+      break;
+    default:
+      throw new Error("ERROR_UNHANDLED_COMBINATION_MOVE");
+  }
+
+  return null;
+}

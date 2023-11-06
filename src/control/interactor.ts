@@ -19,7 +19,7 @@ export class Interactor implements ControlSubscriber {
 
     switch (category) {
       case "move":
-        this._moveInteractor.onButtonAction(button, action, pushedButtons);
+        this._moveInteractor.onButtonAction(button, action);
         break;
     }
   }

@@ -31,13 +31,22 @@ export class Renderer {
     for (const entity of entities) {
       if (entity.id === player?.id) {
         this._ctx.fillStyle = "black";
-        this._ctx.fillRect(player.x, player.y, player.width, player.height);
+        // this._ctx.fillRect(player.x, player.y, player.width, player.height);
+
+        this._ctx.beginPath();
+        this._ctx.arc(player.x, player.y, 20, 0, 180);
+        this._ctx.fill();
+        this._ctx.closePath();
 
         continue;
       }
 
       this._ctx.fillStyle = "darkblue";
-      this._ctx.fillRect(entity.x, entity.y, entity.width, entity.height);
+      // this._ctx.fillRect(entity.x, entity.y, entity.width, entity.height);
+      this._ctx.beginPath();
+      this._ctx.arc(entity.x, entity.y, 20, 0, 180);
+      this._ctx.fill();
+      this._ctx.closePath();
     }
   }
 }
