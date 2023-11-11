@@ -10,7 +10,7 @@ export class WsClient {
   }
 
   initPlayer() {
-    this.state.entities.player = player;
+    this.state.entities.initPlayer(player);
   }
 
   initEntities() {
